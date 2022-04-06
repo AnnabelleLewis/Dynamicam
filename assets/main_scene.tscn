@@ -1,0 +1,137 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://modules/camera_area_constraint/area_constraint_maker.gd" type="Script" id=1]
+[ext_resource path="res://modules/constraint_area/constraint_area.gd" type="Script" id=2]
+[ext_resource path="res://modules/camera_path_constraint/path_constraint_maker.gd" type="Script" id=3]
+[ext_resource path="res://modules/dynamicam/dynamic_camera.gd" type="Script" id=4]
+[ext_resource path="res://icon.png" type="Texture" id=5]
+[ext_resource path="res://modules/player/player.gd" type="Script" id=6]
+[ext_resource path="res://modules/debug_viewer/debug_viewer.gd" type="Script" id=7]
+[ext_resource path="res://modules/area_poi/area_poi.gd" type="Script" id=8]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 207, 138 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 756.5, 566.5 )
+
+[sub_resource type="Curve2D" id=3]
+_data = {
+"points": PoolVector2Array(  )
+}
+
+[sub_resource type="Curve2D" id=4]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 539, 68, -35.6359, -133.635, 35.6359, 133.635, 748, 142, -128.854, -139.343, 128.854, 139.343, 488, 518, -117.705, 136.729, 117.705, -136.729, 1026, 480, 0, 0, 0, 0, 1301, 243, 0, 0, 0, 0, 1558, 418 )
+}
+
+[sub_resource type="OpenSimplexNoise" id=7]
+seed = 4
+
+[sub_resource type="CircleShape2D" id=5]
+
+[sub_resource type="CircleShape2D" id=6]
+radius = 292.754
+
+[node name="Main" type="Node2D"]
+
+[node name="CameraConstArea" type="Area2D" parent="."]
+script = ExtResource( 2 )
+constraint_maker = NodePath("AreaConstraintMaker")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraConstArea"]
+position = Vector2( 179, 151 )
+shape = SubResource( 1 )
+
+[node name="AreaConstraintMaker" type="Node2D" parent="CameraConstArea"]
+position = Vector2( 22, 46 )
+script = ExtResource( 1 )
+extent = Vector2( 320, 200 )
+zoom_range = Vector2( 2, 2 )
+
+[node name="ConstraintArea" type="Area2D" parent="."]
+script = ExtResource( 2 )
+constraint_maker = NodePath("PathConstraintMaker")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConstraintArea"]
+position = Vector2( 1150.5, 266.5 )
+shape = SubResource( 2 )
+
+[node name="PathConstraintMaker" type="Node2D" parent="ConstraintArea"]
+script = ExtResource( 3 )
+path = SubResource( 3 )
+zoom_range = Vector2( 0.5, 0.5 )
+
+[node name="Path2D" type="Path2D" parent="ConstraintArea/PathConstraintMaker"]
+position = Vector2( 67, -32 )
+curve = SubResource( 4 )
+
+[node name="DynamicCamera" type="Camera2D" parent="."]
+position = Vector2( nan, nan )
+rotating = true
+current = true
+smoothing_speed = 0.0
+drag_margin_left = 0.0
+drag_margin_top = 0.0
+drag_margin_right = 0.0
+drag_margin_bottom = 0.0
+script = ExtResource( 4 )
+zoom_lerp_speed = 5.0
+position_lerp_speed = 5.0
+
+[node name="Player" type="KinematicBody2D" parent="."]
+position = Vector2( 175, -98 )
+script = ExtResource( 6 )
+noise = SubResource( 7 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource( 5 )
+
+[node name="Icon" type="Sprite" parent="Player"]
+position = Vector2( 5, -5 )
+texture = ExtResource( 5 )
+
+[node name="Icon" type="Sprite" parent="."]
+position = Vector2( 1110, -35 )
+texture = ExtResource( 5 )
+
+[node name="Icon6" type="Sprite" parent="."]
+position = Vector2( -414, 165 )
+texture = ExtResource( 5 )
+
+[node name="AreaPOI" type="Area2D" parent="Icon6"]
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Icon6/AreaPOI"]
+shape = SubResource( 6 )
+
+[node name="Icon2" type="Sprite" parent="."]
+position = Vector2( 306, 394 )
+texture = ExtResource( 5 )
+
+[node name="Icon3" type="Sprite" parent="."]
+position = Vector2( 407, -69 )
+texture = ExtResource( 5 )
+
+[node name="Icon4" type="Sprite" parent="."]
+position = Vector2( 1676, -78 )
+texture = ExtResource( 5 )
+
+[node name="Icon5" type="Sprite" parent="."]
+position = Vector2( 1444, 414 )
+texture = ExtResource( 5 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="DebugViewer" type="ColorRect" parent="CanvasLayer"]
+margin_right = 239.0
+margin_bottom = 300.0
+color = Color( 0, 0, 0, 0.784314 )
+script = ExtResource( 7 )
+
+[node name="Label" type="Label" parent="CanvasLayer/DebugViewer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+text = "asdasd"

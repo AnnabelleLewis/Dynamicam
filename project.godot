@@ -1,0 +1,122 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "ConstraintMaker",
+"class": "AreaConstraintMaker",
+"language": "GDScript",
+"path": "res://modules/camera_area_constraint/area_constraint_maker.gd"
+}, {
+"base": "Area2D",
+"class": "AreaPOI",
+"language": "GDScript",
+"path": "res://modules/area_poi/area_poi.gd"
+}, {
+"base": "CameraConstraint",
+"class": "CameraAreaConstraint",
+"language": "GDScript",
+"path": "res://modules/camera_area_constraint/camera_area_constraint.gd"
+}, {
+"base": "Reference",
+"class": "CameraConstraint",
+"language": "GDScript",
+"path": "res://modules/dynamicam/camera_constraint.gd"
+}, {
+"base": "CameraConstraint",
+"class": "CameraPathConstraint",
+"language": "GDScript",
+"path": "res://modules/camera_path_constraint/camera_path_constraint.gd"
+}, {
+"base": "Reference",
+"class": "CameraShake",
+"language": "GDScript",
+"path": "res://modules/dynamicam/camera_shake.gd"
+}, {
+"base": "Area2D",
+"class": "ConstraintArea",
+"language": "GDScript",
+"path": "res://modules/constraint_area/constraint_area.gd"
+}, {
+"base": "Node2D",
+"class": "ConstraintMaker",
+"language": "GDScript",
+"path": "res://modules/constraint_area/constraint_maker.gd"
+}, {
+"base": "ColorRect",
+"class": "DebugViewer",
+"language": "GDScript",
+"path": "res://modules/debug_viewer/debug_viewer.gd"
+}, {
+"base": "Camera2D",
+"class": "DynamicCamera",
+"language": "GDScript",
+"path": "res://modules/dynamicam/dynamic_camera.gd"
+}, {
+"base": "ConstraintMaker",
+"class": "PathConstraintMaker",
+"language": "GDScript",
+"path": "res://modules/camera_path_constraint/path_constraint_maker.gd"
+}, {
+"base": "CameraShake",
+"class": "SimplexShake",
+"language": "GDScript",
+"path": "res://modules/simplex_shake/simplex_shake.gd"
+} ]
+_global_script_class_icons={
+"AreaConstraintMaker": "",
+"AreaPOI": "",
+"CameraAreaConstraint": "",
+"CameraConstraint": "",
+"CameraPathConstraint": "",
+"CameraShake": "",
+"ConstraintArea": "",
+"ConstraintMaker": "",
+"DebugViewer": "",
+"DynamicCamera": "",
+"PathConstraintMaker": "",
+"SimplexShake": ""
+}
+
+[application]
+
+config/name="Dynamicam"
+run/main_scene="res://assets/main_scene.tscn"
+config/icon="res://icon.png"
+
+[input]
+
+move_up={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":87,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_left={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":65,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_right={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_down={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"
