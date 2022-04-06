@@ -18,7 +18,7 @@ func _ready():
 		"rotate_scale":0.002,
 	}
 	var shake = SimplexShake.new(props)
-	camera.add_screenshake(shake)
+	#camera.add_screenshake(shake)
 
 func _physics_process(delta):
 	var move_vec = Vector2(

@@ -6,7 +6,7 @@ extends ConstraintMaker
 
 var _constraint : CameraPathConstraint
 
-export (Curve2D) var path
+var path
 export (Vector2) var zoom_range
 
 func _ready():

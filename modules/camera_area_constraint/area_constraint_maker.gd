@@ -20,8 +20,9 @@ func get_constraint():
 	return _constraint
 
 func _draw():
-	var draw_rect = Rect2(Vector2.ZERO,extent)
-	draw_rect(draw_rect,Color(0.8,0.4,0.4,0.5))
+	if Engine.editor_hint:
+		var draw_rect = Rect2(Vector2.ZERO,extent)
+		draw_rect(draw_rect,Color(0.8,0.4,0.4,0.5))
 
 func set_extent(new_extent):
 	extent = new_extent
