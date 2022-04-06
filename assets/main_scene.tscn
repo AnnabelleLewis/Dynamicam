@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://modules/camera_area_constraint/area_constraint_maker.gd" type="Script" id=1]
 [ext_resource path="res://modules/constraint_area/constraint_area.gd" type="Script" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://modules/occluder_polygon_builder/occluder_polygon_builder.gd" type="Script" id=11]
 [ext_resource path="res://default_env.tres" type="Environment" id=12]
 [ext_resource path="res://assets/levelsccripts/Door1Area.gd" type="Script" id=13]
+[ext_resource path="res://assets/fonts/robot.tres" type="DynamicFont" id=14]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 352, 256 )
@@ -88,6 +89,18 @@ tracks/2/keys = {
 "update": 0,
 "values": [ true ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("../RichTextLabel3:percent_visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [sub_resource type="Animation" id=16]
 resource_name = "close"
@@ -140,6 +153,18 @@ tracks/3/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../RichTextLabel3:percent_visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.2, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
 }
 
 [sub_resource type="Curve" id=18]
@@ -242,6 +267,96 @@ extents = Vector2( 32, 128 )
 
 [sub_resource type="RectangleShape2D" id=21]
 extents = Vector2( 32, 256 )
+
+[sub_resource type="Animation" id=22]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=23]
+resource_name = "read"
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=26]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=27]
+resource_name = "read"
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=24]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=25]
+resource_name = "read"
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
 
 [node name="Main" type="Node2D"]
 
@@ -514,3 +629,71 @@ animator = NodePath("../Door2/AnimationPlayer")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door1Area2"]
 position = Vector2( 32, 0 )
 shape = SubResource( 21 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_left = 128.0
+margin_top = 128.0
+margin_right = 512.0
+margin_bottom = 256.0
+custom_fonts/normal_font = ExtResource( 14 )
+visible_characters = 0
+percent_visible = 0.0
+text = "Noise based screen shake allows for a handheld effect..."
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="RichTextLabel"]
+position = Vector2( 192, 64 )
+scale = Vector2( 19.2, 6.4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RichTextLabel/VisibilityNotifier2D"]
+anims/RESET = SubResource( 22 )
+anims/read = SubResource( 23 )
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="."]
+margin_left = 1280.0
+margin_top = 2176.0
+margin_right = 1664.0
+margin_bottom = 2304.0
+custom_fonts/normal_font = ExtResource( 14 )
+visible_characters = 0
+percent_visible = 0.0
+text = "Try Dynamicam2D NOW!"
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="RichTextLabel4"]
+position = Vector2( 192, 224 )
+scale = Vector2( 19.2, 3.2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RichTextLabel4/VisibilityNotifier2D"]
+anims/RESET = SubResource( 26 )
+anims/read = SubResource( 27 )
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+margin_left = 1664.0
+margin_top = 896.0
+margin_right = 1856.0
+margin_bottom = 1088.0
+custom_fonts/normal_font = ExtResource( 14 )
+visible_characters = 0
+percent_visible = 0.0
+text = "The camera can stick to boxes, or follow paths"
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="RichTextLabel2"]
+position = Vector2( 96, 160 )
+scale = Vector2( 9.6, 3.2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RichTextLabel2/VisibilityNotifier2D"]
+anims/RESET = SubResource( 24 )
+anims/read = SubResource( 25 )
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="."]
+margin_left = 896.0
+margin_top = 64.0
+margin_right = 1344.0
+margin_bottom = 128.0
+custom_fonts/normal_font = ExtResource( 14 )
+visible_characters = 0
+percent_visible = 0.0
+text = "Or a powerfull rumble"
+
+[connection signal="screen_entered" from="RichTextLabel/VisibilityNotifier2D" to="RichTextLabel/VisibilityNotifier2D/AnimationPlayer" method="play" binds= [ "read" ]]
+[connection signal="screen_entered" from="RichTextLabel4/VisibilityNotifier2D" to="RichTextLabel4/VisibilityNotifier2D/AnimationPlayer" method="play" binds= [ "read" ]]
+[connection signal="screen_entered" from="RichTextLabel2/VisibilityNotifier2D" to="RichTextLabel2/VisibilityNotifier2D/AnimationPlayer" method="play" binds= [ "read" ]]
