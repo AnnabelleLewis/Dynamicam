@@ -1,70 +1,420 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://modules/camera_area_constraint/area_constraint_maker.gd" type="Script" id=1]
 [ext_resource path="res://modules/constraint_area/constraint_area.gd" type="Script" id=2]
 [ext_resource path="res://modules/camera_path_constraint/path_constraint_maker.gd" type="Script" id=3]
 [ext_resource path="res://modules/dynamicam/dynamic_camera.gd" type="Script" id=4]
-[ext_resource path="res://icon.png" type="Texture" id=5]
+[ext_resource path="res://modules/light_sphere/light_sphere.tscn" type="PackedScene" id=5]
 [ext_resource path="res://modules/player/player.gd" type="Script" id=6]
 [ext_resource path="res://modules/debug_viewer/debug_viewer.gd" type="Script" id=7]
-[ext_resource path="res://modules/area_poi/area_poi.gd" type="Script" id=8]
+[ext_resource path="res://modules/collision_polygon_builder/collision_polygon_builder.gd" type="Script" id=8]
+[ext_resource path="res://modules/light_sphere/light_sphere.png" type="Texture" id=9]
+[ext_resource path="res://assets/fog_particle.png" type="Texture" id=10]
+[ext_resource path="res://modules/occluder_polygon_builder/occluder_polygon_builder.gd" type="Script" id=11]
+[ext_resource path="res://default_env.tres" type="Environment" id=12]
+[ext_resource path="res://assets/levelsccripts/Door1Area.gd" type="Script" id=13]
+[ext_resource path="res://assets/fonts/robot.tres" type="DynamicFont" id=14]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 207, 138 )
+extents = Vector2( 352, 256 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 756.5, 566.5 )
+extents = Vector2( 448, 448 )
 
-[sub_resource type="Curve2D" id=3]
+[sub_resource type="Curve2D" id=9]
 _data = {
-"points": PoolVector2Array(  )
+"points": PoolVector2Array( 0, 0, 0, 0, 768, 256, -123.2, 2.93334, 123.2, -2.93334, 1280, 256, -2.93334, -134.934, 2.93334, 134.934, 1472, 448, 0, 0, 0, 0, 1472, 960 )
 }
 
-[sub_resource type="Curve2D" id=4]
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 539, 68, -35.6359, -133.635, 35.6359, 133.635, 748, 142, -128.854, -139.343, 128.854, 139.343, 488, 518, -117.705, 136.729, 117.705, -136.729, 1026, 480, 0, 0, 0, 0, 1301, 243, 0, 0, 0, 0, 1558, 418 )
-}
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 384, 544 )
 
 [sub_resource type="OpenSimplexNoise" id=7]
 seed = 4
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="OpenSimplexNoise" id=14]
+octaves = 4
+period = 4.0
 
-[sub_resource type="CircleShape2D" id=6]
-radius = 292.754
+[sub_resource type="CircleShape2D" id=5]
+radius = 32.0
+
+[sub_resource type="CanvasItemMaterial" id=11]
+blend_mode = 1
+
+[sub_resource type="Curve" id=12]
+_data = [ Vector2( 0.00490196, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.5, 0.978371 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.00564408 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=13]
+offsets = PoolRealArray( 0, 0.309392, 0.773481, 1 )
+colors = PoolColorArray( 1, 1, 1, 0, 0.54902, 0.54902, 0.54902, 0.882353, 0.588812, 0.588812, 0.588812, 0.765167, 1, 1, 1, 0 )
+
+[sub_resource type="OccluderPolygon2D" id=10]
+
+[sub_resource type="Animation" id=15]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -256 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CPUParticles2D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CPUParticles2D2:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../RichTextLabel3:percent_visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "close"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -256 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("../Player")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "screenshake_impulse"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CPUParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("CPUParticles2D2:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../RichTextLabel3:percent_visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.2, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="Curve" id=18]
+_data = [ Vector2( 0, 0.092244 ), 0.0, 27.1118, 0, 0, Vector2( 0.0735294, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.931373, 0.454583 ), -1.73091, -1.73091, 0, 0, Vector2( 1, 0.0286077 ), -7.73132, 0.0, 0, 0 ]
+
+[sub_resource type="Animation" id=19]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 448, -384 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CPUParticles2D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CPUParticles2D2:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=20]
+resource_name = "close"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 960, 640 ), Vector2( 704, 640 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("../Player")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "screenshake_impulse"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CPUParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("CPUParticles2D2:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="RectangleShape2D" id=17]
+extents = Vector2( 32, 128 )
+
+[sub_resource type="RectangleShape2D" id=21]
+extents = Vector2( 32, 256 )
+
+[sub_resource type="Animation" id=22]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=23]
+resource_name = "read"
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=26]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=27]
+resource_name = "read"
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=24]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=25]
+resource_name = "read"
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
 
 [node name="Main" type="Node2D"]
 
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color( 0.290196, 0.305882, 0.411765, 1 )
+polygon = PoolVector2Array( -320, -320, 2304, -256, 2304, 2560, -192, 2304 )
+
 [node name="CameraConstArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
 script = ExtResource( 2 )
 constraint_maker = NodePath("AreaConstraintMaker")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CameraConstArea"]
-position = Vector2( 179, 151 )
+position = Vector2( 352, 256 )
 shape = SubResource( 1 )
 
 [node name="AreaConstraintMaker" type="Node2D" parent="CameraConstArea"]
-position = Vector2( 22, 46 )
+position = Vector2( 128, 128 )
 script = ExtResource( 1 )
-extent = Vector2( 320, 200 )
-zoom_range = Vector2( 2, 2 )
+extent = Vector2( 448, 256 )
+zoom_range = Vector2( 1, 1 )
 
 [node name="ConstraintArea" type="Area2D" parent="."]
+position = Vector2( 704, 128 )
+collision_layer = 0
+collision_mask = 2
 script = ExtResource( 2 )
 constraint_maker = NodePath("PathConstraintMaker")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ConstraintArea"]
-position = Vector2( 1150.5, 266.5 )
+position = Vector2( 448, 448 )
 shape = SubResource( 2 )
 
 [node name="PathConstraintMaker" type="Node2D" parent="ConstraintArea"]
 script = ExtResource( 3 )
-path = SubResource( 3 )
-zoom_range = Vector2( 0.5, 0.5 )
+zoom_range = Vector2( 0.8, 0.8 )
 
 [node name="Path2D" type="Path2D" parent="ConstraintArea/PathConstraintMaker"]
-position = Vector2( 67, -32 )
-curve = SubResource( 4 )
+position = Vector2( -704, -128 )
+curve = SubResource( 9 )
+
+[node name="ConstraintArea2" type="Area2D" parent="."]
+position = Vector2( 1088, 1024 )
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 2 )
+constraint_maker = NodePath("AreaConstraintMaker")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConstraintArea2"]
+position = Vector2( 384, 544 )
+shape = SubResource( 8 )
+
+[node name="AreaConstraintMaker" type="Node2D" parent="ConstraintArea2"]
+position = Vector2( 256, 256 )
+script = ExtResource( 1 )
+extent = Vector2( 256, 640 )
+zoom_range = Vector2( 1.2, 1.2 )
 
 [node name="DynamicCamera" type="Camera2D" parent="."]
 position = Vector2( nan, nan )
@@ -80,50 +430,23 @@ zoom_lerp_speed = 5.0
 position_lerp_speed = 5.0
 
 [node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( 175, -98 )
+position = Vector2( 64, 256 )
+collision_layer = 3
 script = ExtResource( 6 )
 noise = SubResource( 7 )
+shake_noise = SubResource( 14 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 shape = SubResource( 5 )
 
 [node name="Icon" type="Sprite" parent="Player"]
-position = Vector2( 5, -5 )
-texture = ExtResource( 5 )
-
-[node name="Icon" type="Sprite" parent="."]
-position = Vector2( 1110, -35 )
-texture = ExtResource( 5 )
-
-[node name="Icon6" type="Sprite" parent="."]
-position = Vector2( -414, 165 )
-texture = ExtResource( 5 )
-
-[node name="AreaPOI" type="Area2D" parent="Icon6"]
-script = ExtResource( 8 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Icon6/AreaPOI"]
-shape = SubResource( 6 )
-
-[node name="Icon2" type="Sprite" parent="."]
-position = Vector2( 306, 394 )
-texture = ExtResource( 5 )
-
-[node name="Icon3" type="Sprite" parent="."]
-position = Vector2( 407, -69 )
-texture = ExtResource( 5 )
-
-[node name="Icon4" type="Sprite" parent="."]
-position = Vector2( 1676, -78 )
-texture = ExtResource( 5 )
-
-[node name="Icon5" type="Sprite" parent="."]
-position = Vector2( 1444, 414 )
-texture = ExtResource( 5 )
+modulate = Color( 0.603922, 0.54902, 0.596078, 1 )
+texture = ExtResource( 9 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="DebugViewer" type="ColorRect" parent="CanvasLayer"]
+visible = false
 margin_right = 239.0
 margin_bottom = 300.0
 color = Color( 0, 0, 0, 0.784314 )
@@ -135,3 +458,242 @@ anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 4.0
 text = "asdasd"
+
+[node name="Particles2D" type="CPUParticles2D" parent="."]
+modulate = Color( 0.54902, 0.54902, 0.54902, 0.0784314 )
+material = SubResource( 11 )
+position = Vector2( 1088, 1024 )
+amount = 32
+lifetime = 100.0
+preprocess = 100.0
+texture = ExtResource( 10 )
+emission_shape = 2
+emission_rect_extents = Vector2( 1800, 1800 )
+gravity = Vector2( 0, 0 )
+angular_velocity = 1.0
+angular_velocity_random = 1.0
+angle = 720.0
+angle_random = 1.0
+scale_amount = 5.0
+scale_amount_curve = SubResource( 12 )
+color_ramp = SubResource( 13 )
+
+[node name="Walls" type="Polygon2D" parent="."]
+color = Color( 0.133333, 0.133333, 0.231373, 1 )
+invert_enable = true
+invert_border = 1000.0
+polygon = PoolVector2Array( 0, 64, 64, 0, 640, 0, 704, 64, 704, 128, 1472, 128, 1600, 256, 1600, 1024, 1856, 1280, 1856, 1984, 1728, 2112, 1216, 2112, 1088, 1984, 1088, 1280, 1344, 1024, 1344, 448, 1280, 384, 704, 384, 704, 448, 640, 512, 64, 512, 0, 448 )
+
+[node name="CollisionPolygonBuilder" type="StaticBody2D" parent="Walls"]
+script = ExtResource( 8 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Walls"]
+occluder = SubResource( 10 )
+script = ExtResource( 11 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 12 )
+
+[node name="LightSphere" parent="." instance=ExtResource( 5 )]
+position = Vector2( 1472, 1280 )
+scale = Vector2( 2, 2 )
+
+[node name="LightSphere2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 1472, 1920 )
+scale = Vector2( 2, 2 )
+
+[node name="LightSphere3" parent="." instance=ExtResource( 5 )]
+position = Vector2( 640, 64 )
+
+[node name="LightSphere4" parent="." instance=ExtResource( 5 )]
+position = Vector2( 640, 448 )
+
+[node name="Door1" type="Polygon2D" parent="."]
+position = Vector2( 0, -256 )
+color = Color( 0.133333, 0.133333, 0.231373, 1 )
+polygon = PoolVector2Array( 704, 384, 768, 384, 768, 128, 704, 128 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Door1"]
+anims/RESET = SubResource( 15 )
+anims/close = SubResource( 16 )
+
+[node name="OccluderPolygonBuilder" type="LightOccluder2D" parent="Door1"]
+script = ExtResource( 11 )
+
+[node name="CollisionPolygonBuilder" type="StaticBody2D" parent="Door1"]
+script = ExtResource( 8 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Door1"]
+position = Vector2( 768, 384 )
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 100.0
+initial_velocity_random = 1.0
+damping = 100.0
+angle = 45.0
+scale_amount = 16.0
+scale_amount_curve = SubResource( 18 )
+color = Color( 0.133333, 0.133333, 0.231373, 1 )
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="Door1"]
+light_mask = 0
+position = Vector2( 704, 384 )
+amount = 32
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 100.0
+initial_velocity_random = 1.0
+damping = 100.0
+angle = 45.0
+scale_amount = 16.0
+scale_amount_curve = SubResource( 18 )
+color = Color( 0.133333, 0.133333, 0.231373, 1 )
+
+[node name="Door2" type="Polygon2D" parent="."]
+position = Vector2( 448, -384 )
+color = Color( 0.133333, 0.133333, 0.231373, 1 )
+polygon = PoolVector2Array( 640, 384, 896, 384, 896, 320, 640, 320 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Door2"]
+anims/RESET = SubResource( 19 )
+anims/close = SubResource( 20 )
+
+[node name="OccluderPolygonBuilder" type="LightOccluder2D" parent="Door2"]
+script = ExtResource( 11 )
+
+[node name="CollisionPolygonBuilder" type="StaticBody2D" parent="Door2"]
+script = ExtResource( 8 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Door2"]
+position = Vector2( 640, 320 )
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 100.0
+initial_velocity_random = 1.0
+damping = 100.0
+angle = 45.0
+scale_amount = 16.0
+scale_amount_curve = SubResource( 18 )
+color = Color( 0.133333, 0.133333, 0.231373, 1 )
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="Door2"]
+light_mask = 0
+position = Vector2( 640, 384 )
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 100.0
+initial_velocity_random = 1.0
+damping = 100.0
+angle = 45.0
+scale_amount = 16.0
+scale_amount_curve = SubResource( 18 )
+color = Color( 0.133333, 0.133333, 0.231373, 1 )
+
+[node name="Door1Area" type="Area2D" parent="."]
+position = Vector2( 960, 256 )
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 13 )
+animator = NodePath("../Door1/AnimationPlayer")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door1Area"]
+position = Vector2( 32, 0 )
+shape = SubResource( 17 )
+
+[node name="Door1Area2" type="Area2D" parent="."]
+position = Vector2( 1472, 1088 )
+rotation = 1.5708
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 13 )
+animator = NodePath("../Door2/AnimationPlayer")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door1Area2"]
+position = Vector2( 32, 0 )
+shape = SubResource( 21 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_left = 128.0
+margin_top = 128.0
+margin_right = 512.0
+margin_bottom = 256.0
+custom_fonts/normal_font = ExtResource( 14 )
+visible_characters = 0
+percent_visible = 0.0
+text = "Noise based screen shake allows for a handheld effect..."
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="RichTextLabel"]
+position = Vector2( 192, 64 )
+scale = Vector2( 19.2, 6.4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RichTextLabel/VisibilityNotifier2D"]
+anims/RESET = SubResource( 22 )
+anims/read = SubResource( 23 )
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="."]
+margin_left = 1280.0
+margin_top = 2176.0
+margin_right = 1664.0
+margin_bottom = 2304.0
+custom_fonts/normal_font = ExtResource( 14 )
+visible_characters = 0
+percent_visible = 0.0
+text = "Try Dynamicam2D NOW!"
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="RichTextLabel4"]
+position = Vector2( 192, 224 )
+scale = Vector2( 19.2, 3.2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RichTextLabel4/VisibilityNotifier2D"]
+anims/RESET = SubResource( 26 )
+anims/read = SubResource( 27 )
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+margin_left = 1664.0
+margin_top = 896.0
+margin_right = 1856.0
+margin_bottom = 1088.0
+custom_fonts/normal_font = ExtResource( 14 )
+visible_characters = 0
+percent_visible = 0.0
+text = "The camera can stick to boxes, or follow paths"
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="RichTextLabel2"]
+position = Vector2( 96, 160 )
+scale = Vector2( 9.6, 3.2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RichTextLabel2/VisibilityNotifier2D"]
+anims/RESET = SubResource( 24 )
+anims/read = SubResource( 25 )
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="."]
+margin_left = 896.0
+margin_top = 64.0
+margin_right = 1344.0
+margin_bottom = 128.0
+custom_fonts/normal_font = ExtResource( 14 )
+visible_characters = 0
+percent_visible = 0.0
+text = "Or a powerfull rumble"
+
+[connection signal="screen_entered" from="RichTextLabel/VisibilityNotifier2D" to="RichTextLabel/VisibilityNotifier2D/AnimationPlayer" method="play" binds= [ "read" ]]
+[connection signal="screen_entered" from="RichTextLabel4/VisibilityNotifier2D" to="RichTextLabel4/VisibilityNotifier2D/AnimationPlayer" method="play" binds= [ "read" ]]
+[connection signal="screen_entered" from="RichTextLabel2/VisibilityNotifier2D" to="RichTextLabel2/VisibilityNotifier2D/AnimationPlayer" method="play" binds= [ "read" ]]

@@ -12,6 +12,7 @@ func _init(path, zoom_range):
 
 func _apply_constraint(position,rotation,zoom) -> Dictionary:
 	var ret_pos = path.get_closest_point(position)
+	print_debug(path.get_point_position(0))
 	var ret_zooom = clamp(zoom,zoom_range.x,zoom_range.y)
 	return {
 			"position":ret_pos,
