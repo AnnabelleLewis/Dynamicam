@@ -12,6 +12,7 @@ var power_max : float # The maximum power
 var noise_texture : OpenSimplexNoise
 var rotate : bool # Should this do camera rotation
 var rotate_scale : float # Multiplier for rotation
+var shake_scale : float # Multiplier for translation
 
 func _init(props:Dictionary):
 	time = float(OS.get_ticks_msec())
@@ -47,6 +48,12 @@ func _init(props:Dictionary):
 		rotate_scale = props.rotate_scale
 	else:
 		rotate_scale = 1.0
+		
+	if props.has("shake_scale"):
+		shake_scale = props.shake_scale
+	else:
+		shake_scale = 1.0
+
 
 #   Takes in the camera position and rotation, and returns a vector3 containing 
 # the shake offset as the x and y variables and the rotation as the z variable
@@ -58,8 +65,8 @@ func _apply_shake(delta) -> Vector3:
 	var shake_volume := power * power
 	
 	var base_shake := Vector3(
-			noise_texture.get_noise_3d(time,0,0),
-			noise_texture.get_noise_3d(0,time,0),
+			noise_texture.get_noise_3d(time,0,0) * shake_scale,
+			noise_texture.get_noise_3d(0,time,0) * shake_scale,
 			noise_texture.get_noise_3d(0,time,0) * rotate_scale if rotate else 0.0
 	)
 	
